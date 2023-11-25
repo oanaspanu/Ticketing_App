@@ -8,51 +8,57 @@ class Location {
 private:
     static int maxSeats;
     static int COUNTER;
-    int rows = 0;
-    int* seatsPerRow = nullptr;
-    Zone zoneName;
+    int noSeats = 0;
+    int* seats = nullptr;
+    Zone zoneName= Zone::GENERAL;
 
 public:
 
     // Class Constructor
-    Location(Zone zoneName, int rows, int* seats) {
-        this->zoneName = zoneName;  //receve the zone
-        this->rows = rows;          //receve the row
-        
-        if (rows <= 0 || seats == nullptr) {     //if the row number or seats number is incorect
-            throw exception("Invalid data.");
-        }
-
-
-        if (COUNTER == maxSeats)                // if all the seats were taken
-            cout << "No more seats available.";
-        else  
-        {
-            COUNTER += rows;
-            seatsPerRow = new int[rows];
-            for (int i = 0; i < rows; ++i) {
-                seatsPerRow[i] = seats[i];
-            }
-        }
+    Location(Zone zoneName, int noSeats, int* seats) {
+       
     }
 
 
     // Copy Constructor
     Location(const Location& object) {
-        this->rows = object.rows;
-        this->zoneName = object.zoneName;
-
-        seatsPerRow = new int[rows];
-        for (int i = 0; i < rows; ++i) {
-            seatsPerRow[i] = object.seatsPerRow[i];
-        }
+       
     }
 
     // Destructor
     ~Location() {
-        delete[] seatsPerRow;
+        delete[] seats;
     }
     
+
+    // Getters
+
+    int* getSeats() {
+
+        if (this-> seats == nullptr )
+            throw exception("There is no seat set. Try to reserve a seat first.");
+
+        int* copy = new int[this->noSeats];
+        for (int i = 0; i < this->noSeats; i++)
+            copy[i] = this->seats[i];
+
+        return copy;
+    }
+
+    int getNoSeats() {
+        return this->noSeats;
+    }
+
+    string getZoneName() {
+        switch (this->zoneName) {
+        case GENERAL:
+            return "General";
+        case FIRST_ROW:
+            return "First-row";
+        case VIP:
+            return "VIP";
+        }
+    }
 
 };
 
