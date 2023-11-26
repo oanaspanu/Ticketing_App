@@ -1,42 +1,38 @@
-#include <iostream>
+#include "Location.h"
 
-using namespace std;
 
-enum Zone { GENERAL = 1, FIRST_ROW, VIP };
+int Location::MAX_SEATS = 500;
+int Location::COUNTER = 0;
 
-class Location {
-private:
-    static int maxSeats;
-    static int COUNTER;
-    int noSeats = 0;
-    int* seats = nullptr;
-    Zone zoneName= Zone::GENERAL;
+// Setters (for writing the object)
 
-public:
+    void Location::setSeats(const int newNoSeats, const int* newSeats) {
+        if (newSeats == nullptr)
+            throw exception("Invalid data.");
 
-    // Class Constructor
-    Location(Zone zoneName, int noSeats, int* seats) {
-       
+        if (COUNTER + newNoSeats > MAX_SEATS)
+            throw exception("No seats available.");
+
+        delete this->seats;
+
+        this->seats = new int[newNoSeats];
+        for (int i = 0; i < newNoSeats; i++)
+            this->seats[i] = newSeats[i];
+
+        this->noSeats = newNoSeats;
+        COUNTER += newNoSeats;
+    }
+
+    void Location::setZoneName(const Zone newZoneName)
+    {
+        this->zoneName = newZoneName;
     }
 
 
-    // Copy Constructor
-    Location(const Location& object) {
-       
-    }
-
-    // Destructor
-    ~Location() {
-        delete[] seats;
-    }
-    
-
-    // Getters
-
-    int* getSeats() {
-
-        if (this-> seats == nullptr )
-            throw exception("There is no seat set. Try to reserve a seat first.");
+    // Getters (for reading the object)
+    int* Location::getSeats() {
+        if (this->seats == nullptr || this->noSeats <= 0)
+            throw exception("There is no seat set.");
 
         int* copy = new int[this->noSeats];
         for (int i = 0; i < this->noSeats; i++)
@@ -45,14 +41,14 @@ public:
         return copy;
     }
 
-    int getNoSeats() {
+    int  Location::getNoSeats() {
         return this->noSeats;
     }
 
-    string getZoneName() {
+    string  Location::getZoneName() {
         switch (this->zoneName) {
-        case GENERAL:
-            return "General";
+        case NORMAL:
+            return "Any";
         case FIRST_ROW:
             return "First-row";
         case VIP:
@@ -60,7 +56,35 @@ public:
         }
     }
 
-};
 
-int Location::maxSeats = 500;
-int Location::COUNTER = 0;
+    // Class Constructor
+    Location::Location(Zone zoneName, int noSeats, int* seats) {
+        this->setSeats(noSeats, seats);
+        this->setZoneName(zoneName);
+    }
+
+    Location::Location(int noSeats, int* seats) {
+        this->setSeats(noSeats, seats);
+    }
+
+    // Class Copy Constructor 
+
+     
+    // Displaying information
+    void Location::printInfo() {
+        cout << endl;
+        cout << "Zone selected: " << this->getZoneName() << endl;
+        cout << "Number of seats selected: " << this->getNoSeats() << endl;
+        if (seats != nullptr) {
+            cout << "Seats selected: ";
+            for (int i = 0; i < noSeats; i++)
+                cout << seats[i] << ' ';
+            cout << endl;
+        }
+    }
+
+    // Destructor
+    Location::~Location() {
+        delete[] seats;
+    } 
+      

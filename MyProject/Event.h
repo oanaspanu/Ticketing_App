@@ -1,11 +1,40 @@
 #pragma once
-#include <string>
+
+#include <stdio.h>
+#include <iostream>
+
 using namespace std;
 
 class Event {
 private:
-	char* name;
-	string date;
+    string name = "";
+    string date = "";
 
 public:
+
+ // Setters
+    void setName(const string newName);
+
+    void setDate(const string newDate);
+
+// Getters
+    string getName();
+
+    string getDate();
+
+
+// Class Constructor
+    Event(string name, string date);
+
+    Event(string name);
+
+ // Copy Constructor
+    Event(const Event& object);
+
+ // Displaying information
+    void printInfo();
+
+ // Destructor
+    ~Event();
+
 };
