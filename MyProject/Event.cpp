@@ -10,11 +10,11 @@
     }
 
 // Getters
-    string Event::getName() {
+    string Event::getName() const {
         return this->name;
     }
 
-    string Event::getDate() {
+    string Event::getDate() const {
         return this->date;
     }
    
@@ -31,7 +31,8 @@
 
 // Copy Constructor
     Event::Event(const Event& object) {
-
+        this->name = object.name;
+        this->date = object.date;
     }
 
 // Displaying information
@@ -45,4 +46,10 @@
 // Destructor
     Event::~Event() {
 
+    }
+
+// Overloading operator =
+    void Event::operator=(const Event source) {
+        this->name = source.name;
+        this->date = source.date;
     }

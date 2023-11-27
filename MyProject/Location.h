@@ -23,11 +23,11 @@ public:
 
 
     // Getters
-    int* getSeats();
+    int* getSeats() const;
 
-    int getNoSeats();
+    int getNoSeats() const;
 
-    string getZoneName();
+    string getZoneName() const;
 
 
     // Class Constructor
@@ -36,13 +36,16 @@ public:
     Location(int noSeats, int* seats);
 
     // Class Copy Constructor 
-     
-    
+    Location(const Location& object);
+ 
+        // Destructor
+    ~Location();
+
     // Displaying information
     void printInfo();
 
-    // Destructor
-    ~Location();
+    // Overloading operator =
+    void operator=(const Location source);
 };
 
 

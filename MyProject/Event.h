@@ -18,9 +18,9 @@ public:
     void setDate(const string newDate);
 
 // Getters
-    string getName();
+    string getName() const;
 
-    string getDate();
+    string getDate() const;
 
 
 // Class Constructor
@@ -31,10 +31,13 @@ public:
  // Copy Constructor
     Event(const Event& object);
 
+ // Destructor
+    ~Event();
+
  // Displaying information
     void printInfo();
 
- // Destructor
-    ~Event();
+ // Overloading operator =
+    void operator=(const Event source);
 
 };

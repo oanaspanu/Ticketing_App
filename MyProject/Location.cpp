@@ -29,8 +29,8 @@ int Location::COUNTER = 0;
     }
 
 
-    // Getters (for reading the object)
-    int* Location::getSeats() {
+// Getters (for reading the object)
+    int* Location::getSeats() const {
         if (this->seats == nullptr || this->noSeats <= 0)
             throw exception("There is no seat set.");
 
@@ -41,11 +41,11 @@ int Location::COUNTER = 0;
         return copy;
     }
 
-    int  Location::getNoSeats() {
+    int  Location::getNoSeats() const {
         return this->noSeats;
     }
 
-    string  Location::getZoneName() {
+    string  Location::getZoneName() const {
         switch (this->zoneName) {
         case NORMAL:
             return "Any";
@@ -57,7 +57,7 @@ int Location::COUNTER = 0;
     }
 
 
-    // Class Constructor
+// Class Constructor
     Location::Location(Zone zoneName, int noSeats, int* seats) {
         this->setSeats(noSeats, seats);
         this->setZoneName(zoneName);
@@ -67,10 +67,23 @@ int Location::COUNTER = 0;
         this->setSeats(noSeats, seats);
     }
 
-    // Class Copy Constructor 
+// Class Copy Constructor 
+    Location::Location(const Location& object) {
+        this->zoneName = object.zoneName;
 
-     
-    // Displaying information
+        this->seats = new int[object.noSeats];
+        for (int i = 0; i < object.noSeats; i++)
+            this->seats[i] = object.seats[i];
+
+        this->noSeats = object.noSeats;
+    }
+
+// Destructor
+    Location::~Location() {
+        delete seats;
+    } 
+
+// Displaying information
     void Location::printInfo() {
         cout << endl;
         cout << "Zone selected: " << this->getZoneName() << endl;
@@ -82,9 +95,20 @@ int Location::COUNTER = 0;
             cout << endl;
         }
     }
-
-    // Destructor
-    Location::~Location() {
-        delete[] seats;
-    } 
       
+// Overloading operator =
+    void Location::operator=(const Location source) {
+        this->zoneName = source.zoneName;
+        this->noSeats = source.noSeats;
+
+        if (this->seats == source.seats) {
+            return;     //same object
+        }
+        else {
+            delete this->seats;
+            this->seats = new int[this->noSeats];
+            for (int i = 0; i < this->noSeats; i++)
+                this->seats[i] = source.seats[i];
+
+        }
+    }
