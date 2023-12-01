@@ -12,6 +12,10 @@ enum PriceType { SIMPLE = 20, PREMIUM = 40, DISCOUNT = 10 };
 
 class Ticket {
 private:
+    static const int MAX_ID;
+    static const int MIN_ID;
+    static int* USED_IDS;
+    static int NO_IDS;
     int id = 0;
     string userName = "";
     PriceType price = PriceType::SIMPLE;
@@ -21,21 +25,18 @@ private:
     void setValidation(const int newId);
 
 public:
-    static const int MAX_ID;
-    static const int MIN_ID;
-    static int* USED_IDS;
-    static int NO_IDS;
 
     void addId(const int newId) const;
 
-    // Setters //
+// Setters //
+
     void setUserName(const string userName);
 
     void setPriceType(const PriceType newPrice);
 
 
 
-    // Getters //
+// Getters //
 
     int getId() const;
 
@@ -46,23 +47,24 @@ public:
     string getValidation() const;
 
 
-    // Class Constructor //
+// Class Constructor //
+
     Ticket(string userName, PriceType price);
 
     Ticket(string userName);
 
 
-    // Class Copy Constructor //
+// Class Copy Constructor //
     Ticket(const Ticket& object);
 
 
-    // Destructor //
+// Destructor //
     ~Ticket();
 
 
-    // Displaying information //
+// Displaying information //
+    void printInfo();
 
-
-    // Overloading operator = //
-
+// Overloading operator = //
+    void operator=(const Ticket source);
 };

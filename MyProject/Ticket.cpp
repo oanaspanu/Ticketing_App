@@ -19,11 +19,21 @@ void Ticket::addId(const int newId) const {
 }
 
 // Setters //
+
     void Ticket::setId(){
         if (this->id == 0) {
-            int id = rand() % MAX_ID + MIN_ID;
-            addId(id);
-            this->id = id;
+            bool ok;
+            int newId;
+            do {
+
+                ok = 0;
+                newId = rand() % MAX_ID + MIN_ID;
+                for (int i = 0; i < NO_IDS; i++)
+                    if (newId == USED_IDS[i])
+                        ok = 1;
+            } while (ok);
+            addId(newId);
+            this->id = newId;
         }
     }
 
@@ -31,6 +41,7 @@ void Ticket::addId(const int newId) const {
         if (USED_IDS == nullptr)
             throw exception("No id registered.");
 
+        this->isValid = 0;
         for (int i = 0; i < NO_IDS; i++)
             if (newId == USED_IDS[i])
                 this->isValid = 1;
@@ -46,6 +57,7 @@ void Ticket::addId(const int newId) const {
 
 
 // Getters //
+
     int Ticket::getId() const {
         return this->id;
     }
@@ -74,6 +86,7 @@ void Ticket::addId(const int newId) const {
 
 
 // Class Constructor //
+
     Ticket::Ticket(string userName) {
         if (this->id == 0) {
             setId();
@@ -92,7 +105,9 @@ void Ticket::addId(const int newId) const {
     }
 
 // Class Copy Constructor //
+
     Ticket::Ticket(const Ticket& object){
+        this->id = object.id;
         this->userName = object.userName;
         this->price = object.price;
         this->isValid = object.isValid;
@@ -101,8 +116,23 @@ void Ticket::addId(const int newId) const {
 // Destructor //
     Ticket::~Ticket() {}
 
+
 // Displaying information //
-    
+
+    void Ticket::printInfo() {
+        cout << endl;
+        cout << "Ticket information:" << endl;
+        cout << "ID: " << this->getId() << endl;
+        cout << "User name: " << this->getUserName() << endl;
+        cout << "Price: " << this->getPrice() << endl;
+        cout << "Is valid? " << (this->isValid ? "Yes" : "No") << endl;
+    }
 
 // Overloading operator = //
-   
+
+    void Ticket::operator=(const Ticket source) {
+        this->setId();
+        this->userName = source.userName;
+        this->price = source.price;
+        this->isValid = source.isValid;
+    }

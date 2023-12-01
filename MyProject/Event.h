@@ -5,39 +5,50 @@
 
 using namespace std;
 
+enum EventType {UNSPECIFIED=1, CONCERT, MOVIE, SPORTS, THEATER};
+
 class Event {
 private:
     string name = "";
     string date = "";
+    EventType type = EventType::UNSPECIFIED;
 
 public:
 
- // Setters
+ // Setters //
+
     void setName(const string newName);
 
     void setDate(const string newDate);
 
-// Getters
+    void setType(const EventType newType);
+
+// Getters //
+
     string getName() const;
 
     string getDate() const;
 
+    string getType() const;
 
-// Class Constructor
-    Event(string name, string date);
 
-    Event(string name);
+// Class Constructor //
 
- // Copy Constructor
+    Event(string name, EventType type, string date);
+
+    Event(string name, EventType type);
+
+
+ // Copy Constructor //
     Event(const Event& object);
 
- // Destructor
+ // Destructor //
     ~Event();
 
- // Displaying information
+ // Displaying information //
     void printInfo();
 
- // Overloading operator =
+ // Overloading operator = //
     void operator=(const Event source);
 
 };
