@@ -87,7 +87,7 @@ public:
 // Overloading operator ! //
     friend bool operator! (Location& location);
 
-// Overloading operator >, <, >=, <= //
+// Overloading operator >= //
     bool operator>= (Location& location);
 
 // Overloading operator == //

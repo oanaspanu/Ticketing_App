@@ -156,6 +156,7 @@ void Location::addSeat(int newSeat) {
 
     istream& operator>>(istream& input, Location& location)
     {
+        cout << "New location: " << endl;
         cout << "Enter hall: ";
         int hall;
         input >> hall;
@@ -212,6 +213,8 @@ void Location::addSeat(int newSeat) {
     int& Location::operator[] (int index){
         if (this->seats != nullptr && index >= 0 && index < this->noSeats)
             return this->seats[index];
+        else
+            throw exception("Index out of bounds");
     }
 
 
@@ -231,7 +234,7 @@ void Location::addSeat(int newSeat) {
 // Overloading operator ++ (pre and post) //
 
     Location Location::operator++ () {
-        this->addSeat(this->seats[this->noSeats] + 1);
+        this->addSeat(this->seats[this->noSeats] + 1); //and the following seat number in the seat vector
         return *this;
     }
 
@@ -259,7 +262,7 @@ void Location::addSeat(int newSeat) {
     }
     
 
-// Overloading operator >, <, >=, <= //
+// Overloading operator >= //
 
      bool Location::operator>= (Location& location) {
          if (this->noSeats >= location.noSeats)

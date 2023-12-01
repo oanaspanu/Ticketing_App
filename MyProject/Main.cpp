@@ -13,7 +13,7 @@ int main() {
 	int seats[] = { 20, 21 };
 
 	Location l1(6, 2, seats);
-	Event e1("Movie 1", MOVIE, "01 jan 2023");
+	Event e1("Movie 1", MOVIE, 10, 1, 2025);
 	Ticket t1("User1", PREMIUM), t2("User2"), t3("User3"), t4("User4");
 
 	cout << "Cinema seats reserved: " << l1.getNoSeats() << endl;
@@ -49,39 +49,66 @@ int main() {
 	//Testing location class overloading
 
 	Location l2 = l1, l3;  // operator=
-	cin >> l3;   //operator>>
+	//cin >> l3;   //operator>>
 	cout << endl;
 	cout << "---------------------------------------" << endl;
-	cout << l2;  //operator<<
+	//cout << l2;  //operator<<
 	cout << endl;
-	cout << l3;
+	//cout << l3;
 	cout << "---------------------------------------" << endl;
+	l3 = l1;
 
-
-	int a = l3[4];  //operator []
-	cout << a;
+	int a = l1[0];  //operator []
+	cout << a << endl;
 
 	l2 = 5 + l2;  //operator+
 	l1++;         //operator++
 	++l3;
 
 	float b = 5 + (float)l1;  //cast operator
-
-	//operator>=
-	if (l2 >= l3)
+		
+	if (!l1) //operator!
+		cout<<"! l1" << endl;;
+	
+	if (l2 >= l3) //operator>=
 		cout << "l2 has more seats than l3." << endl;
 	else
 		cout << "l3 has more seats than l2" << endl;
-
-	//operator==
-	if (l1 == l2)
+	
+	if (l1 == l2) //operator==
 		cout << "l1 and l2 are in the same hall" << endl;
 	else
 		cout << "l1 and l2 are in different halls" << endl;
 
 
+	//Testing location class overloading
 
+	Event e2, e3;
+	e3 = e1; // operator=
+	cin >> e2; //operator >>
+	cout << "------------------------------" << endl;
+	
+	cout << e3; //operator << 
+	cout << endl;
+	cout << e2;
+	 
+	e2 = e1 + 10;  //operator +
 
+	e2++; 	//operator ++
+	++e1;
+
+	float avg = 10 + (float)e1; //cast operator 
+
+	if (!e1) 	//operator ! 
+		cout << "! e1"<< endl;
+
+	if (e1 < e3)	//operator < 
+		cout << " e1" << endl;
+	else 
+		cout << "e3" << endl;
+
+	if (e1 == e2)	//operator == 
+		cout << "e1 == e2" << endl;
 
 	return 0;
 }
