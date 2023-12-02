@@ -34,7 +34,10 @@ void Event::addYears(int value) {
 // Setters //
 
     void Event::setName(string newName) {
-        this->name = newName;
+        if (!newName.empty())
+            this->name = newName;
+        else
+            throw exception("Invalid data.");
     }
 
     void Event::setDay(int newDay) {
@@ -63,7 +66,11 @@ void Event::addYears(int value) {
     }
 
     void Event::setDescription(string newDescription) {
-        this->description = newDescription;
+        if (!newDescription.empty())
+            this->description = newDescription;
+        else
+            throw exception("Invalid data.");
+        
     }
 
 
@@ -142,7 +149,7 @@ void Event::addYears(int value) {
 
     void Event::printInfo() {
         cout << endl;
-        cout << "Event information:" << endl;
+        cout << "-- Event information --" << endl;
         cout << "Name: " << this->getName() << endl;
         cout << "Type: " << this->getType() << endl;
         if (this->day !=0 && this->month !=0 && this->year !=0)
@@ -168,9 +175,9 @@ void Event::addYears(int value) {
         this->description = source.description;
     }
 
-    // Overloading operator >> //
+// Overloading operator >> //
     istream& operator>>(istream& input, Event& event) {
-        cout << "New event: " << endl;
+        cout << "-- New event --" << endl;
         cout << "Enter name: ";
         string name;
         input >> name;
@@ -214,10 +221,10 @@ void Event::addYears(int value) {
         return input;
     }
 
-    // Overloading operator << //
+// Overloading operator << //
     ostream& operator<<(ostream& output, const Event& event) {
         output << endl;
-        output << "Event information:" << endl;
+        output << "-- Event information --" << endl;
         output << "Name: " << event.getName() << endl;
         output << "Type: " << event.getType() << endl;
         if (event.day != 0 && event.month != 0 && event.year != 0)
@@ -228,7 +235,7 @@ void Event::addYears(int value) {
         return output;
        }
 
-    // Overloading operator + //
+// Overloading operator + //
        Event Event::operator+ (int newDay) {
            Event copy = *this;
            copy.addDays(newDay);
@@ -239,7 +246,7 @@ void Event::addYears(int value) {
            return event + newDay;
     }
 
-    // Overloading operator ++ (pre and post) //
+// Overloading operator ++ (pre and post) //
        Event Event::operator++ () {
           this->addDays(1);
           return *this;
@@ -251,12 +258,12 @@ void Event::addYears(int value) {
            return copy;
     }
 
-    // Overloading cast operator //
+// Overloading cast operator //
        Event::operator float() {
            return (float)this->day;
     }
 
-    // Overloading operator ! //
+// Overloading operator ! //
        bool operator! (Event& event) {
            if (event.day == 0)
                return true;
@@ -264,7 +271,7 @@ void Event::addYears(int value) {
                return false;
     }
 
-    // Overloading operator < //
+// Overloading operator < //
        bool Event::operator < (Event& event) {
            if (this->year < event.year)
                return true;
@@ -284,7 +291,7 @@ void Event::addYears(int value) {
                    return false;
     }
 
-    // Overloading operator == //
+// Overloading operator == //
        bool Event::operator== (Event& event) {
            if (this->year == event.year && this->month == event.month && this->day == event.day)
                return true;

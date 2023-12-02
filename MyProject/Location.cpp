@@ -120,7 +120,7 @@ void Location::addSeat(int newSeat) {
 
     void Location::printInfo() {
         cout << endl;
-        cout << "Location information:" << endl;
+        cout << "-- Location information --" << endl;
         cout << "Hall: " << this->getHall() << endl;
         cout << "Zone: " << this->getZoneName() << endl;
         cout << "Number of seats: " << this->getNoSeats() << endl;
@@ -156,7 +156,7 @@ void Location::addSeat(int newSeat) {
 
     istream& operator>>(istream& input, Location& location)
     {
-        cout << "New location: " << endl;
+        cout << "-- New location --" << endl;
         cout << "Enter hall: ";
         int hall;
         input >> hall;
@@ -194,7 +194,7 @@ void Location::addSeat(int newSeat) {
 
     ostream& operator<<(ostream& output, const Location& location) {
         output << endl;
-        output << "Location information:" << endl;
+        output << "-- Location information --" << endl;
         output << "Hall: " << location.getHall() << endl;
         output << "Zone: " << location.getZoneName() << endl;
         output << "Number of seats: " << location.getNoSeats() << endl;

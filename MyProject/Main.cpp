@@ -16,6 +16,9 @@ int main() {
 	Event e1("Movie 1", MOVIE, 10, 1, 2025);
 	Ticket t1("User1", PREMIUM), t2("User2"), t3("User3"), t4("User4");
 
+	// first forms of the classes
+	//methods testing
+
 	cout << "Cinema seats reserved: " << l1.getNoSeats() << endl;
 	cout << "Event name: " << e1.getName() << endl;
 
@@ -28,6 +31,9 @@ int main() {
 	cout << "Ticket 2 id: " << t2.getId() << endl;
 	cout << "Ticket 2 User Name: " << t2.getUserName() << endl;
 	cout << endl;
+
+
+	// testing ids uniqness and it's random generation
 	cout << "Ticket 3 id: " << t3.getId() << endl;
 	cout << "Ticket 4 id: " << t4.getId() << endl;
 
@@ -39,6 +45,8 @@ int main() {
 	cout << "No of ids: " << Ticket::NO_IDS;
 	*/
 
+
+	//testing printinfo
 	cout << endl;
 	l1.printInfo();
 	e1.printInfo();
@@ -81,7 +89,7 @@ int main() {
 		cout << "l1 and l2 are in different halls" << endl;
 
 
-	//Testing location class overloading
+	//Testing event class overloading
 
 	Event e2, e3;
 	e3 = e1; // operator=
@@ -109,6 +117,34 @@ int main() {
 
 	if (e1 == e2)	//operator == 
 		cout << "e1 == e2" << endl;
+
+	//Testing ticket class overloading
+	
+	Ticket t5;
+	t3 = t1; // operator=
+	cin >> t5; //operator >>
+	cout << "------------------------------" << endl;
+
+	cout << t3; //operator << 
+	cout << endl;
+	cout << t5;
+
+	t2 = t1 + "Smiths";  //operator +
+
+	t2--; 	//operator ++
+	cout << t2;
+
+	if (!t1) 	//operator ! 
+		cout << "! t1" << endl;
+
+	if (t1 > t2)	//operator < 
+		cout << " t1" << endl;
+	else
+		cout << "t2" << endl;
+
+	if (t1 == t2)	//operator == 
+		cout << "t1 == t2" << endl;
+
 
 	return 0;
 }
