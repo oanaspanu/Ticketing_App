@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <fstream>
 #include <iostream>
 #include "Location.h"
 #include "Event.h"
@@ -6,145 +6,88 @@
 
 using namespace std;
 
-int main() {
+// Custom exception classes
+class FileOpenException : public exception {
+public:
+    const char* what() const noexcept override {
+        return "Unable to open file";
+    }
+};
 
-	// clases test
+class FileProcessingException : public exception {
+public:
+    const char* what() const noexcept override {
+        return "Error processing file";
+    }
+};
 
-	int seats[] = { 20, 21 };
+// Menu
+void showMenu() {
+    int choice;
+    do {
+        cout << "\n----- Menu -----\n";
+        cout << "1. Add Event\n";
+        cout << "2. Add Location\n";
+        cout << "3. Add Ticket\n";
+        cout << "4. Display Events\n";
+        cout << "5. Display Locations\n";
+        cout << "6. Display Tickets\n";
+        cout << "7. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
 
-	Location l1(6, 2, seats);
-	Event e1("Movie 1", MOVIE, 10, 1, 2025);
-	Ticket t1("User1", PREMIUM), t2("User2"), t3("User3"), t4("User4");
-
-	// first forms of the classes
-	//methods testing
-
-	cout << "Cinema seats reserved: " << l1.getNoSeats() << endl;
-	cout << "Event name: " << e1.getName() << endl;
-
-	cout << "Ticket 1 id: " << t1.getId() << endl;
-	cout << "Ticket 1 User Name: " << t1.getUserName() << endl;
-	cout << "Ticket 1 price type: " << t1.getPrice() << endl;
-	cout << "Ticket 1 is valid? " << t1.getValidation() << endl;
-	cout << endl;
-
-	cout << "Ticket 2 id: " << t2.getId() << endl;
-	cout << "Ticket 2 User Name: " << t2.getUserName() << endl;
-	cout << endl;
-
-
-	// testing ids uniqness and it's random generation
-	cout << "Ticket 3 id: " << t3.getId() << endl;
-	cout << "Ticket 4 id: " << t4.getId() << endl;
-
-
-	//Check the static vector from Tickets
-	/*for (int i = 0; i < Ticket::NO_IDS; i++)
-		cout << Ticket::USED_IDS[i] << ' ';
-	cout << endl;
-	cout << "No of ids: " << Ticket::NO_IDS;
-	*/
-
-
-	//testing printinfo
-	cout << endl;
-	l1.printInfo();
-	e1.printInfo();
-	t1.printInfo();
-	cout << endl;
-	cout << "---------------------------------------" << endl;
-
-	//Testing location class overloading
-
-	Location l2 = l1, l3;  // operator=
-	//cin >> l3;   //operator>>
-	cout << endl;
-	cout << "---------------------------------------" << endl;
-	//cout << l2;  //operator<<
-	cout << endl;
-	//cout << l3;
-	cout << "---------------------------------------" << endl;
-	l3 = l1;
-
-	int a = l1[0];  //operator []
-	cout << a << endl;
-
-	l2 = 5 + l2;  //operator+
-	l1++;         //operator++
-	++l3;
-
-	float b = 5 + (float)l1;  //cast operator
-		
-	if (!l1) //operator!
-		cout<<"! l1" << endl;;
-	
-	if (l2 >= l3) //operator>=
-		cout << "l2 has more seats than l3." << endl;
-	else
-		cout << "l3 has more seats than l2" << endl;
-	
-	if (l1 == l2) //operator==
-		cout << "l1 and l2 are in the same hall" << endl;
-	else
-		cout << "l1 and l2 are in different halls" << endl;
+        switch (choice) {
+        case 1:
+            // Add Event
+            break;
+        case 2:
+            // Add Location
+            break;
+        case 3:
+            // Add Ticket
+            break;
+        case 4:
+            // Display Events
+            break;
+        case 5:
+            // Display Locations
+            break;
+        case 6:
+            // Display Tickets
+            break;
+        case 7:
+            cout << "Exiting program.\n";
+            break;
+        default:
+            cout << "Invalid choice. Try again.\n";
+            break;
+        }
+    } while (choice != 7);
+}
 
 
-	//Testing event class overloading
+// Process files
+void processFile(const string& filename) {
+    ifstream inputFile(filename);
 
-	Event e2, e3;
-	e3 = e1; // operator=
-	cin >> e2; //operator >>
-	cout << "------------------------------" << endl;
-	
-	cout << e3; //operator << 
-	cout << endl;
-	cout << e2;
-	 
-	e2 = e1 + 10;  //operator +
+    if (!inputFile.is_open()) {
+        throw FileOpenException();
+    }
 
-	e2++; 	//operator ++
-	++e1;
+    // Process file
+    
 
-	float avg = 10 + (float)e1; //cast operator 
+    // Close the file
+    inputFile.close();
+}
 
-	if (!e1) 	//operator ! 
-		cout << "! e1"<< endl;
+int main(int argc, char* argv[]) {
+    if (argc > 1) {
+        processFile(argv[1]);
+    }
+    else {
+        showMenu();
+    }
 
-	if (e1 < e3)	//operator < 
-		cout << " e1" << endl;
-	else 
-		cout << "e3" << endl;
-
-	if (e1 == e2)	//operator == 
-		cout << "e1 == e2" << endl;
-
-	//Testing ticket class overloading
-	
-	Ticket t5;
-	t3 = t1; // operator=
-	cin >> t5; //operator >>
-	cout << "------------------------------" << endl;
-
-	cout << t3; //operator << 
-	cout << endl;
-	cout << t5;
-
-	t2 = t1 + "Smiths";  //operator +
-
-	t2--; 	//operator ++
-	cout << t2;
-
-	if (!t1) 	//operator ! 
-		cout << "! t1" << endl;
-
-	if (t1 > t2)	//operator < 
-		cout << " t1" << endl;
-	else
-		cout << "t2" << endl;
-
-	if (t1 == t2)	//operator == 
-		cout << "t1 == t2" << endl;
-
-
-	return 0;
+    return 0;
 }
