@@ -9,17 +9,22 @@
 
 class Manager {
 public:
-    vector<Event> events;
-    vector<Location> locations;
-    vector<Ticket> tickets;
+    Event** events = nullptr;
+    Location* locations = nullptr;
+    Ticket** tickets = nullptr;
+    int noEvents = 0, noLocations = 0, noTickets = 0;
 
     // Function to read data from binary files
+    void readBinaryFiles();
 
     // Function to write data to binary files
+    void writeBinaryFiles();
 
     // Function to read data from text files
+    void readTextFiles();
 
     // Function to write data to text files
+    void writeTextFiles();
 
     // Add Event function
     void addEvent();

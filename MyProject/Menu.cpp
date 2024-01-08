@@ -43,7 +43,3 @@ void Menu::showMenu() {
             }
         } while (choice != 7);
     }
-
-void Menu::writeDataToFiles() {
-        // Implementation for saving data to files
-    }

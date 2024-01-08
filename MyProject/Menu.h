@@ -6,7 +6,4 @@ class Menu : public Manager  {
 public:
     void showMenu();
 
-private:
-    void writeDataToFiles();
-
 };
