@@ -35,11 +35,15 @@ void Menu::showMenu() {
                 displayTickets();
                 break;
             case 7:
-                writeDataToFiles(); // Save data before exiting
+                saveDataToFiles(); 
                 std::cout << "Exiting...\n";
                 break;
             default:
                 std::cout << "Invalid choice. Try again.\n";
             }
         } while (choice != 7);
+    }
+
+    void Menu::saveDataToFiles() {
+
     }

@@ -33,7 +33,6 @@ void processFile(const string& filename) {
     // Process file
     
 
-    // Close the file
     inputFile.close();
 }
 

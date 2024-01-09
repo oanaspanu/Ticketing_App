@@ -2,13 +2,14 @@
 
 #include <stdio.h>
 #include <iostream>
-#include <stdlib.h>
+#include <string>
+#include "Manager.h"
 
 using namespace std;
 
 enum PriceType { SIMPLE = 20, PREMIUM = 40, DISCOUNT = 10 };
 
-class Ticket {
+class Ticket : public Manager {
 private:
     static const int PRICE_S;
     static const int PRICE_P;
@@ -52,7 +53,7 @@ public:
 
     Ticket();
 
-    Ticket(string userName, PriceType price);
+    Ticket(string userName, PriceType price) ;
 
     Ticket(string userName);
 
@@ -99,4 +100,15 @@ public:
 // Overloading operator == //
     bool operator== (Ticket& ticket);
 
+    // Function to read data from binary files
+    void readBinaryFiles();
+
+    // Function to write data to binary files
+    void writeBinaryFiles();
+
+    // Function to read data from text files
+    void readTextFiles();
+
+    // Function to write data to text files
+    void writeTextFiles();
 };

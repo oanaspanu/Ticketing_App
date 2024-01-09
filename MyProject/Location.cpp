@@ -280,3 +280,24 @@ void Location::addSeat(int newSeat) {
          else
              return false;
      }
+
+
+     // Function to read data from binary files
+     void Location::readBinaryFiles() {
+
+     }
+
+     // Function to write data to binary files
+     void Location::writeBinaryFiles() {
+
+     }
+
+     // Function to read data from text files
+     void Location::readTextFiles() {
+
+     }
+
+     // Function to write data to text files
+     void Location::writeTextFiles() {
+
+     }

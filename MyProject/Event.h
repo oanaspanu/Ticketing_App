@@ -2,12 +2,13 @@
 
 #include <stdio.h>
 #include <iostream>
+#include "Manager.h"
 
 using namespace std;
 
 enum EventType {UNSPECIFIED, CONCERT, MOVIE, SPORTS, THEATER};
 
-class Event {
+class Event : public Manager {
 private:
     static int MIN_DATE;
     static int MAX_DAY;
@@ -107,5 +108,6 @@ public:
 
 // Overloading operator == //
     bool operator== (Event& event);
+
 
 };

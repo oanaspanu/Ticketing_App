@@ -8,39 +8,27 @@
 #include "Ticket.h"
 
 class Manager {
+protected:
+    Manager** objects = nullptr;
+    int noObjects = 0;
+
 public:
-    Event** events = nullptr;
-    Location* locations = nullptr;
-    Ticket** tickets = nullptr;
-    int noEvents = 0, noLocations = 0, noTickets = 0;
 
     // Function to read data from binary files
-    void readBinaryFiles();
+    virtual void readBinaryFiles() = 0;
 
     // Function to write data to binary files
-    void writeBinaryFiles();
+    virtual void writeBinaryFiles() = 0;
 
     // Function to read data from text files
-    void readTextFiles();
+    virtual void readTextFiles() = 0;
 
     // Function to write data to text files
-    void writeTextFiles();
+    virtual void writeTextFiles() = 0;
 
-    // Add Event function
-    void addEvent();
+    // Add object
+    void addObject(Manager* newObject);
 
-    // Add Location function
-    void addLocation();
-
-    // Add Ticket function
-    void addTicket();
-
-    // Display Events function
-    void displayEvents();
-
-    // Display Locations function
-    void displayLocations();
-
-    // Display Tickets function
-    void displayTickets();
+    // Display object
+    virtual void printInfo() = 0;
 };

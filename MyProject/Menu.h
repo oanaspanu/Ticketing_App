@@ -2,8 +2,8 @@
 #include "Manager.h"
 #include <iostream>
 
-class Menu : public Manager  {
+class Menu {
 public:
     void showMenu();
-
+    void saveDataToFiles();
 };

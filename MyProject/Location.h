@@ -2,12 +2,13 @@
 
 #include <stdio.h>
 #include <iostream>
+#include "Manager.h"
 
 using namespace std;
 
 enum Zone { NORMAL = 1, FIRST_ROW, VIP };
 
-class Location {
+class Location : public Manager {
 private:
     static int MAX_SEATS;
     static int MAX_HALLS;
@@ -92,6 +93,18 @@ public:
 
 // Overloading operator == //
     bool operator== (Location& location);
+
+    // Function to read data from binary files
+    void readBinaryFiles();
+
+    // Function to write data to binary files
+    void writeBinaryFiles();
+
+    // Function to read data from text files
+    void readTextFiles();
+
+    // Function to write data to text files
+    void writeTextFiles();
 
 };
 

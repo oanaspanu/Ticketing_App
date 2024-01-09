@@ -248,3 +248,67 @@ void Ticket::addId(const int newId) const {
         else
             return false;
     }
+
+    // Read Binary Files 
+    void Ticket::readBinaryFiles() {
+        ifstream inputFile("ticket_data.bin", ios::in | ios::binary);
+        if (!inputFile) {
+            throw exception("Error opening binary file for reading");
+        }
+
+        //
+        inputFile.close();
+    }
+
+    // Write Binary Files
+    void Ticket::writeBinaryFiles() {
+        ofstream outputFile("ticket_data.bin", ios::out | ios::binary | ios::app);
+        if (outputFile.is_open()) {
+            outputFile.write((char*)&this->id, sizeof(int));
+            outputFile.write((char*)&this->userName, sizeof(string));
+            outputFile.write((char*)&this->price, sizeof(PriceType));
+            outputFile.write((char*)&this->isValid, sizeof(bool));
+        }
+        outputFile.close();
+    }
+
+    // Read Text Files 
+    void Ticket::readTextFiles()  {
+        ifstream inputFile("ticket_data.txt", ios::in);
+
+        if (!inputFile.is_open()) {
+            cout<<"n\Error opening text file for reading. The file is not here.";
+        }
+        else {
+            cout << "n\Text file for reading is available.";
+            while (!inputFile.eof()) {
+                int id;
+                inputFile >> id;
+                cout << "n\ The ticket id is" << id;
+
+                string name;
+                inputFile >> name;
+                cout << "n\ The ticket user name is" << name;
+
+                int price;
+                inputFile >> price;
+                cout << "n\ The ticket price is" << price;
+
+                string isValid;
+                inputFile >> isValid;
+                cout << "n\ The ticket is valid?" << isValid;
+
+            }
+        }
+        inputFile.close();
+    }
+
+    // Write Text Files
+    void Ticket::writeTextFiles()  {
+        ofstream outputFile("ticket_data.txt", ios::out | ios::app);
+        if (outputFile.is_open()) {
+            
+
+        }
+        outputFile.close();
+    }
