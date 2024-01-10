@@ -1,8 +1,5 @@
 #include "Ticket.h"
 
-const int PRICE_S = 20;
-const int PRICE_P = 40;
-const int PRICE_D = 10;
 int const Ticket::MAX_ID = 899;
 int const Ticket::MIN_ID = 100;
 int* Ticket::USED_IDS = nullptr;
@@ -80,6 +77,8 @@ void Ticket::addId(const int newId) const {
             return "Premium";
         case DISCOUNT:
             return "Discount";
+        default:
+            return "Unknown";
         }
     }
 
@@ -160,11 +159,11 @@ void Ticket::addId(const int newId) const {
         cout << "Enter price type (Simple = 20, Premium = 40, Discount = 10): ";
         int price;
         input >> price;
-        if (price == PRICE_S)
+        if (price == 20)
             ticket.setPriceType(SIMPLE);
-        else if (price == PRICE_P)
+        else if (price == 40)
             ticket.setPriceType(PREMIUM);
-        else if (price == PRICE_D)
+        else if (price == 10)
             ticket.setPriceType(DISCOUNT);
         
         ticket.setValidation();
@@ -250,13 +249,17 @@ void Ticket::addId(const int newId) const {
     }
 
     // Read Binary Files 
-    void Ticket::readBinaryFiles() {
-        ifstream inputFile("ticket_data.bin", ios::in | ios::binary);
+    void Ticket::readBinaryFiles(string filename) {
+        ifstream inputFile(filename, ios::in | ios::binary);
         if (!inputFile) {
             throw exception("Error opening binary file for reading");
         }
 
-        //
+        inputFile.read((char*)&this->id, sizeof(int));
+        inputFile.read((char*)&this->userName, sizeof(string));
+        inputFile.read((char*)&this->price, sizeof(PriceType));
+        inputFile.read((char*)&this->isValid, sizeof(bool));
+
         inputFile.close();
     }
 
@@ -273,30 +276,36 @@ void Ticket::addId(const int newId) const {
     }
 
     // Read Text Files 
-    void Ticket::readTextFiles()  {
-        ifstream inputFile("ticket_data.txt", ios::in);
+    void Ticket::readTextFiles(string filename)  {
+        ifstream inputFile(filename, ios::in);
 
         if (!inputFile.is_open()) {
-            cout<<"n\Error opening text file for reading. The file is not here.";
+            cout<<"\nError opening text file for reading. The file is not here.";
         }
         else {
-            cout << "n\Text file for reading is available.";
+            cout << "\nText file for reading is available.";
             while (!inputFile.eof()) {
-                int id;
-                inputFile >> id;
-                cout << "n\ The ticket id is" << id;
+                int Id;
+                inputFile >> Id;
+                this->id = Id;
+                this->addId(id);
 
-                string name;
-                inputFile >> name;
-                cout << "n\ The ticket user name is" << name;
+                string Name;
+                inputFile >> Name;
+                this->userName = Name;
 
-                int price;
-                inputFile >> price;
-                cout << "n\ The ticket price is" << price;
+                string Price;
+                inputFile >> Price;
+                if (price == 20)
+                    this->setPriceType(SIMPLE);
+                else if (price == 40)
+                    this->setPriceType(PREMIUM);
+                else if (price == 10)
+                    this->setPriceType(DISCOUNT);
 
-                string isValid;
-                inputFile >> isValid;
-                cout << "n\ The ticket is valid?" << isValid;
+                bool IsValid;
+                inputFile >> IsValid;
+                this->isValid = IsValid;
 
             }
         }
@@ -307,8 +316,7 @@ void Ticket::addId(const int newId) const {
     void Ticket::writeTextFiles()  {
         ofstream outputFile("ticket_data.txt", ios::out | ios::app);
         if (outputFile.is_open()) {
-            
-
+            outputFile << this->id << " " << this->userName << " " << this->price << " " << this->isValid << "\n";
         }
         outputFile.close();
     }

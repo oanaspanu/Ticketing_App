@@ -1,9 +1,15 @@
-#pragma once
 #include "Manager.h"
-#include <iostream>
+
+using namespace std;
 
 class Menu {
+protected:
+    Manager** objects = nullptr;
+    int noObjects = 0;
+    
 public:
+    ~Menu();
+
     void showMenu();
-    void saveDataToFiles();
+    void addObject(Manager* newObject);
 };

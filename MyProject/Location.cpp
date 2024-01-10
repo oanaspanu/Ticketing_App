@@ -20,6 +20,13 @@ void Location::addSeat(int newSeat) {
 
 // Setters (for writing the object) //
 
+    void Location::setUserName(const string newUserName) {
+        if (!newUserName.empty())
+            this->userName = newUserName;
+        else
+            throw exception("Invalid data.");
+    }
+
     void Location::setSeats(const int newNoSeats, const int* newSeats) {
         if (newSeats == nullptr)
             throw exception("Invalid data.");
@@ -51,6 +58,10 @@ void Location::addSeat(int newSeat) {
 
 // Getters (for reading the object) //
 
+    string Location::getUserName() const {
+        return this->userName;
+    }
+
     int* Location::getSeats() const {
         if (this->seats == nullptr || this->noSeats <= 0)
             throw exception("There is no seat set.");
@@ -74,6 +85,8 @@ void Location::addSeat(int newSeat) {
             return "First-row";
         case VIP:
             return "VIP";
+        default:
+            return "Unknown";
         }
     }
 
@@ -86,13 +99,15 @@ void Location::addSeat(int newSeat) {
 
     Location::Location(){ }
 
-    Location::Location(int hall, Zone zoneName, int noSeats, int* seats) {
+    Location::Location(string userName, int hall, Zone zoneName, int noSeats, int* seats) {
+        this->setUserName(userName);
         this->setSeats(noSeats, seats);
         this->setZoneName(zoneName);
         this->setHall(hall);
     }
 
-    Location::Location(int hall, int noSeats, int* seats) {
+    Location::Location(string userName, int hall, int noSeats, int* seats) {
+        this->setUserName(userName);
         this->setSeats(noSeats, seats);
         this->setHall(hall);
     }
@@ -100,6 +115,7 @@ void Location::addSeat(int newSeat) {
 // Class Copy Constructor  //
 
     Location::Location(const Location& object) {
+        this->userName = object.userName;
         this->zoneName = object.zoneName;
         this->hall = object.hall;
 
@@ -121,6 +137,7 @@ void Location::addSeat(int newSeat) {
     void Location::printInfo() {
         cout << endl;
         cout << "-- Location information --" << endl;
+        cout << "User name: " << this->getUserName() << endl;
         cout << "Hall: " << this->getHall() << endl;
         cout << "Zone: " << this->getZoneName() << endl;
         cout << "Number of seats: " << this->getNoSeats() << endl;
@@ -135,6 +152,7 @@ void Location::addSeat(int newSeat) {
 // Overloading operator = //
 
     void Location::operator=(const Location source) {
+        this->userName = source.userName;
         this->zoneName = source.zoneName;
         this->noSeats = source.noSeats;
         this->hall = source.hall;
@@ -157,6 +175,11 @@ void Location::addSeat(int newSeat) {
     istream& operator>>(istream& input, Location& location)
     {
         cout << "-- New location --" << endl;
+        cout << "Enter user name: ";
+        string userName;
+        input >> userName;
+        location.setUserName(userName);
+
         cout << "Enter hall: ";
         int hall;
         input >> hall;
@@ -195,6 +218,7 @@ void Location::addSeat(int newSeat) {
     ostream& operator<<(ostream& output, const Location& location) {
         output << endl;
         output << "-- Location information --" << endl;
+        output << "User name: " << location.getUserName() << endl;
         output << "Hall: " << location.getHall() << endl;
         output << "Zone: " << location.getZoneName() << endl;
         output << "Number of seats: " << location.getNoSeats() << endl;
@@ -281,23 +305,82 @@ void Location::addSeat(int newSeat) {
              return false;
      }
 
+     // Read Binary Files 
+     void Location::readBinaryFiles(string filename) {
+         ifstream inputFile(filename, ios::in | ios::binary);
+         if (!inputFile) {
+             throw exception("Error opening binary file for reading");
+         }
+         inputFile.read((char*)&this->userName, sizeof(string));
+         inputFile.read((char*)&this->hall, sizeof(int));
+         inputFile.read((char*)&this->zoneName, sizeof(Zone));
+         inputFile.read((char*)&this->noSeats, sizeof(int));
+         inputFile.read((char*)&this->seats, sizeof(int*));
 
-     // Function to read data from binary files
-     void Location::readBinaryFiles() {
-
+         inputFile.close();
      }
 
-     // Function to write data to binary files
+     // Write Binary Files
      void Location::writeBinaryFiles() {
-
+         ofstream outputFile("location_data.bin", ios::out | ios::binary | ios::app);
+         if (outputFile.is_open()) {
+             outputFile.write((char*)&this->userName, sizeof(string));
+             outputFile.write((char*)&this->hall, sizeof(int));
+             outputFile.write((char*)&this->zoneName, sizeof(Zone));
+             outputFile.write((char*)&this->noSeats, sizeof(int));
+             outputFile.write((char*)&this->seats, sizeof(int*));
+         }
+         outputFile.close();
      }
 
-     // Function to read data from text files
-     void Location::readTextFiles() {
+     // Read Text Files 
+     void Location::readTextFiles(string filename) {
+         ifstream inputFile(filename, ios::in);
 
+         if (!inputFile.is_open()) {
+             cout << "\nError opening text file for reading. The file is not here.";
+         }
+         else {
+             cout << "\nText file for reading is available.";
+             while (!inputFile.eof()) {
+                 string UserName;
+                 inputFile >> UserName;
+                 this->userName = UserName;
+
+                 int Hall; 
+                 inputFile >> Hall;
+                 this->hall = Hall;
+
+                 int Zone;
+                 inputFile >> Zone; 
+                 if (Zone == 1)
+                     this->setZoneName(NORMAL);
+                 else if (Zone == 2)
+                     this->setZoneName(FIRST_ROW);
+                 else if (Zone == 3)
+                     this->setZoneName(VIP);
+
+                 int NoSeats;
+                 inputFile >> NoSeats;
+                 this->noSeats = NoSeats;
+
+                 int* Seats = new int[NoSeats];
+                 cout << "\nThe seats are: ";
+                 for (int i = 0; i < NoSeats; i++){
+                     inputFile >> Seats[i];
+                 }
+                 this->setSeats(NoSeats, Seats);
+
+             }
+         }
+         inputFile.close();
      }
 
-     // Function to write data to text files
+     // Write Text Files
      void Location::writeTextFiles() {
-
+         ofstream outputFile("location_data.txt", ios::out | ios::app);
+         if (outputFile.is_open()) {
+             outputFile << this->userName<< " " << this->hall << " " << this->zoneName << " " << this->noSeats << " " << this->getSeats() << "\n";
+         }
+         outputFile.close();
      }

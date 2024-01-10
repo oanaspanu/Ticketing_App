@@ -13,6 +13,7 @@ private:
     static int MAX_SEATS;
     static int MAX_HALLS;
     static int COUNTER;
+    string userName = "";
     int noSeats = 0;
     int* seats = nullptr;
     Zone zoneName = Zone::NORMAL;
@@ -24,6 +25,8 @@ public:
 
 // Setters //
 
+    void setUserName(const string userName);
+
     void setSeats(const int newNoSeats, const int* newSeats);
 
     void setZoneName(const Zone newZoneName);
@@ -32,6 +35,8 @@ public:
 
 
 // Getters //
+
+    string getUserName() const;
 
     int* getSeats() const;
 
@@ -46,9 +51,9 @@ public:
 
     Location();
 
-    Location(int hall, Zone zoneName, int noSeats, int* seats);
+    Location(string userName, int hall, Zone zoneName, int noSeats, int* seats);
 
-    Location(int hall, int noSeats, int* seats);
+    Location(string userName, int hall, int noSeats, int* seats);
 
 
 // Class Copy Constructor  //
@@ -95,13 +100,13 @@ public:
     bool operator== (Location& location);
 
     // Function to read data from binary files
-    void readBinaryFiles();
+    void readBinaryFiles(string filename);
 
     // Function to write data to binary files
     void writeBinaryFiles();
 
     // Function to read data from text files
-    void readTextFiles();
+    void readTextFiles(string filename);
 
     // Function to write data to text files
     void writeTextFiles();

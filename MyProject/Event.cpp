@@ -104,6 +104,8 @@ void Event::addYears(int value) {
             return "Theater";
         case SPORTS:
             return "Sports";
+        default:
+            return "Unknown";
         }
     }
 
@@ -298,3 +300,91 @@ void Event::addYears(int value) {
            else
                return false;
     }
+
+       // Read Binary Files 
+       void Event::readBinaryFiles(string filename) {
+           ifstream inputFile(filename, ios::in | ios::binary);
+           if (!inputFile) {
+               throw exception("Error opening binary file for reading");
+           }
+
+           inputFile.read((char*)&this->name, sizeof(string));
+           inputFile.read((char*)&this->type, sizeof(EventType));
+           inputFile.read((char*)&this->day, sizeof(int));
+           inputFile.read((char*)&this->month, sizeof(int));
+           inputFile.read((char*)&this->year, sizeof(int));
+           inputFile.read((char*)&this->description, sizeof(string));
+
+           inputFile.close();
+       }
+
+       // Write Binary Files
+       void Event::writeBinaryFiles() {
+           ofstream outputFile("event_data.bin", ios::out | ios::binary | ios::app);
+           if (outputFile.is_open()) {
+               outputFile.write((char*)&this->name, sizeof(string));
+               outputFile.write((char*)&this->type, sizeof(EventType));
+               outputFile.write((char*)&this->day, sizeof(int));
+               outputFile.write((char*)&this->month, sizeof(int));
+               outputFile.write((char*)&this->year, sizeof(int));
+               outputFile.write((char*)&this->description, sizeof(string));
+           }
+           outputFile.close();
+       }
+
+       // Read Text Files 
+       void Event::readTextFiles(string filename) {
+           ifstream inputFile(filename, ios::in);
+
+           if (!inputFile.is_open()) {
+               cout << "\nError opening text file for reading. The file is not here.";
+           }
+           else {
+               cout << "\nText file for reading is available.";
+               while (!inputFile.eof()) {
+                   string Name;
+                   inputFile >> Name;
+                   this->name = Name;
+
+                   int Type;
+                   inputFile >> Type;
+                   if (type == 0)
+                       this->setType(UNSPECIFIED);
+                   else if (type == 1)
+                       this->setType(CONCERT);
+                   else if (type == 2)
+                       this->setType(MOVIE);
+                   else if (type == 3)
+                       this->setType(SPORTS);
+                   else if (type == 4)
+                       this->setType(THEATER);
+
+                   int Day;
+                   inputFile >> Day;
+                   this->day = Day;
+
+                   int Month;
+                   inputFile >> Month;
+                   this->month = Month;
+
+                   int Year;
+                   inputFile >> Year;
+                   this->year = Year;
+
+                   string Description;
+                   inputFile >> Description;
+                   this->description = Description;
+
+               }
+           }
+           inputFile.close();
+       }
+
+       // Write Text Files
+       void Event::writeTextFiles() {
+           ofstream outputFile("event_data.txt", ios::out | ios::app);
+           if (outputFile.is_open()) {
+               outputFile << this->name << " " << this->type << " " << this->day << " " << this->month <<" "<< this->year <<" "<< this->description << "\n";
+           }
+           outputFile.close();
+       }

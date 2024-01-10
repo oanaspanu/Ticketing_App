@@ -109,5 +109,15 @@ public:
 // Overloading operator == //
     bool operator== (Event& event);
 
+    // Read Binary Files 
+    void readBinaryFiles(string filename);
 
+    // Write Binary Files
+    void writeBinaryFiles();
+
+    // Read Text Files 
+    void readTextFiles(string filename);
+
+    // Write Text Files
+    void writeTextFiles();
 };

@@ -11,9 +11,6 @@ enum PriceType { SIMPLE = 20, PREMIUM = 40, DISCOUNT = 10 };
 
 class Ticket : public Manager {
 private:
-    static const int PRICE_S;
-    static const int PRICE_P;
-    static const int PRICE_D;
     static const int MAX_ID;
     static const int MIN_ID;
     static int* USED_IDS;
@@ -101,13 +98,13 @@ public:
     bool operator== (Ticket& ticket);
 
     // Function to read data from binary files
-    void readBinaryFiles();
+    void readBinaryFiles(string filename);
 
     // Function to write data to binary files
     void writeBinaryFiles();
 
     // Function to read data from text files
-    void readTextFiles();
+    void readTextFiles(string filenam);
 
     // Function to write data to text files
     void writeTextFiles();
