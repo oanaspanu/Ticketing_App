@@ -1,7 +1,9 @@
 ﻿# Ticketing App
+ 
 
 ## Description
 A C++ application for managing event ticket issuance, including venue setup, ticket generation, and validation.
+
 
 ## Features
 - Read event location and details
@@ -11,6 +13,7 @@ A C++ application for managing event ticket issuance, including venue setup, tic
 - No third-party libraries
 - File-based input/output & binary storage
 - Object-oriented design with inheritance and STL usage
+
 
 ## Project Structure
 ```
@@ -27,17 +30,20 @@ TicketingApp/
 │-- README.md         # Documentation
 ```
 
+
 ## Development
 - 3+ classes with private attributes, getters/setters
-- - Memory management (pointers, dynamic arrays)
+- Memory management (pointers, dynamic arrays)
 - Overloaded operators (`<<`, `>>`, `[]`, `+`, `-`, `==`, etc.)
 - STL container usage
 - Abstract and derived classes
+
 
 ## Example Scenarios
 - **Football Match:** Stand-based seating, ticket validation at entry
 - **Movie:** Normal & VIP tickets, availability tracking
 - **Theater:** Category-based seating, ticket validation
+
 
 ## License
 For educational purposes only.
