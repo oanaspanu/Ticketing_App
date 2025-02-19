@@ -1,9 +1,6 @@
 ﻿# Ticketing App
  
 
-## Description
-A C++ application for managing event ticket issuance, including venue setup, ticket generation, and validation.
-
 
 ## Features
 - Read event location and details
